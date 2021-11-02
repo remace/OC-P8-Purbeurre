@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import User
 
 
 class Product(models.Model):
@@ -36,6 +37,9 @@ class Product(models.Model):
     off_link = models.CharField(max_length=1024)
 
     category = models.ForeignKey('Category', null=False, on_delete=models.CASCADE)
+
+    # favourites saving
+    in_users_favourites = models.ManyToManyField(User,related_name='users',blank=False)
 
 
 class Category(models.Model):

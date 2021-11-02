@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 
-from products.models import Product
-
 
 class UserManager(BaseUserManager):
     """ User Model Manager """
@@ -45,7 +43,7 @@ class User(AbstractBaseUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # for deletion
+    # flag to delete user without deleting it form database
     is_active = models.BooleanField(default=True)
 
     # permissions
@@ -56,9 +54,6 @@ class User(AbstractBaseUser):
 
     #use email for authentification
     USERNAME_FIELD = 'email'
-
-    #relation to save favourite products
-    favourites = models.ManyToManyField(Product,related_name='products',blank=False)
 
     def __str__(self):
         return self.email
