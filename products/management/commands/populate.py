@@ -26,10 +26,7 @@ class Command(BaseCommand):
     ''' populates the database with x products from y categories'''
 
     help = ("populates the database with products and categories from Open Food Facts API\n "
-            "syntax: ./manage.py populate products categories \n"
-            "args: \n"
-            "(int) products: number of products from each category to import in database\n" 
-            "(int) categories: number of categories to import in database")
+            "syntax: ./manage.py populate products categories \n")
 
 
     def add_arguments(self, parser):
