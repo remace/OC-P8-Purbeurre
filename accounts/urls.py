@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from products import views
+from accounts import views
 
 urlpatterns = [
     path('', views.profile, name='index' )
