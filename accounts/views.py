@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import User
 
@@ -54,5 +54,6 @@ def login_user(request):
     else:
         return render(request, 'accounts/login.html')
 
-def logout(request):
-    pass
+def logout_user(request):
+    logout(request)
+    return render(request, 'products/index.html')

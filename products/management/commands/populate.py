@@ -75,7 +75,9 @@ class Command(BaseCommand):
                             category = c,
                         )
                 except KeyError as e:
+
                     print(f'ERROR: {prod["product_name"]}\tclé:{e}\thttps://fr.openfoodfacts.org/api/v0/produit/{prod["id"]}.json')
+                    
                     # print(prod['nutriments'])
                 else:
                     # print(f'\t{count+1}/{n_products}\t{prod["product_name"]}')
