@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'debug_toolbar', # should be deleted in production
     'products',
     'accounts',
-    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
