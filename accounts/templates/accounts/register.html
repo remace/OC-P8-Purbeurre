@@ -1,0 +1,31 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+    {% include 'products/header.html' %}
+    <section class="page-section">
+        <h1>Register</h1>
+        {% if messages%}
+            {% for message in messages%}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for='email' class="sr-only">Email: </label>
+            <input type="email" id='email' class='form-control' placeholder='email' required>
+            <label for='password' class="sr-only">Mot de passe: </label>
+            <input type='password' id='password' placeholder='password' class="form-control" required>
+            <label for='last_name' class="sr-only">Mot de passe: </label>
+            <input type='last_name' id='last_name' placeholder='last_name' class="form-control" >
+            <label for='first_name' class="sr-only">Mot de passe: </label>
+            <input type='first_name' id='first_name' placeholder='first_name' class="form-control" >
+            <input type="submit" value="Se Connecter">
+        </form>
+    </section>
+    {% include 'products/footer.html' %}
+{% endblock content %}

@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from phonenumber_field.modelfields import PhoneNumberField
 
 
 class UserManager(BaseUserManager):
@@ -36,7 +35,6 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=32, blank=True, null=True)
     last_name = models.CharField(max_length=32, blank=True, null=True)
     email= models.EmailField(unique=True)
-    phone = PhoneNumberField(null=True)
     # TODO AVATAR ?
     
     # registration create and update fields
