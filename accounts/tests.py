@@ -107,4 +107,35 @@ class RegisterPageTestCase(TestCase):
 
 
 class LoginTest(TestCase):
-    pass
+
+    def setUp(self):
+        email="test-password@diff.erents"
+        password = "LePetitChevalDeManège123123!"
+        password2 = "LePetitChevalDeManège123123!"
+        last_name = "test last"
+        first_name = "test first"        
+        self.client.post(reverse('register'),
+                                    {'email':email,
+                                    'password':password,
+                                    'password2':password2,
+                                    'last_name':last_name,
+                                    'first_name':first_name})
+    
+    def test_login_page(self):
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(reverse('login'))
+
+    def test_user_login_nominal_case(self):
+        email="test-password@diff.erents"
+        password = "LePetitChevalDeManège123123!"
+        response = self.client.post(reverse('register'),
+                                                    {'email':email,
+                                                    'password':password,})
+        self.assertEqual(response.status_code,200)
+
+    def test_user_login_unmatching_email(self):
+        pass
+
+    def test_user_login_unmatching_password(self):
+        pass
