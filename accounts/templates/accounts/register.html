@@ -14,17 +14,17 @@
                 </div>
             {% endfor %}
         {% endif %}
-        <form action="" method="POST">
+        <form action="/user/register" method="POST">
             {% csrf_token %}
             <label for='email' class="sr-only">Email: </label>
-            <input type="email" id='email' class='form-control' placeholder='email' required>
+            <input type="email" id='email' class='form-control' placeholder='email' name='email' required>
             <label for='password' class="sr-only">Mot de passe: </label>
-            <input type='password' id='password' placeholder='password' class="form-control" required>
+            <input type='password' id='password' placeholder='password' class="form-control" name="password" required>
             <label for='last_name' class="sr-only">Mot de passe: </label>
-            <input type='last_name' id='last_name' placeholder='last_name' class="form-control" >
+            <input type='last_name' id='last_name' placeholder='last_name' class="form-control" name='last_name' >
             <label for='first_name' class="sr-only">Mot de passe: </label>
-            <input type='first_name' id='first_name' placeholder='first_name' class="form-control" >
-            <input type="submit" value="Se Connecter">
+            <input type='first_name' id='first_name' placeholder='first_name' class="form-control" name='first_name' >
+            <input type="submit" value="Créer Profil">
         </form>
     </section>
     {% include 'products/footer.html' %}

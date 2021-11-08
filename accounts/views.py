@@ -12,7 +12,7 @@ def register(request):
         password = request.POST.get('password')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        user = User(request, email=email, password=password)
+        user = User(email=email, password=password)
         user.first_name = first_name
         user.last_name = last_name
         user.save()
