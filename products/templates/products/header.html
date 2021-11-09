@@ -17,24 +17,28 @@
                 <input type='text' id='nav-search' name='nav-search'/>
                 
                 <li class="nav-item">
-                    <a class="nav-link" title="Mon compte" alt="Mon compte" href="#">
+                    <a class="nav-link" title="Mon compte" alt="Mon compte" href="{% url 'profile' %}">
+                        Mon Compte
                         <i class="far fa-user"></i>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" title="Mes Favoris" alt="Mes favoris" href="#">
+                        Mes Favoris
                         <img class="nav-link" alt='mes favoris' src="{% static 'products/img/carotte/carrot.svg' %}">
                     </a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="/user/logout" title='Déconnexion' alt="Déconnexion">
+                            Déconnexion
                             <i class="fas fa-sign-out-alt"></i>
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="/user/login" title='Connexion' alt="connexion">
+                            Connexion
                             <i class="fas fa-sign-in-alt"></i>
                         </a>
                     </li>

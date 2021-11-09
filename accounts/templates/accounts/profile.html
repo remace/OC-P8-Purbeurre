@@ -1,1 +1,17 @@
-<h1>Hello World</h1>
+{% extends 'products/base.html'%}
+
+{% block content %}
+
+{% include 'products/header.html'%}
+
+<section class="page-section">
+    <h1>Hello World</h1>
+    <p>email: {{user.email}}</p>
+    <p>password: {{user.password}}</p>
+    <p>first_name: {{user.first_name}}</p>
+    <p>last_name: {{user.last_name}}</p>
+</section>
+
+{% include 'products/footer.html'%}
+
+{% endblock content %}

@@ -109,7 +109,7 @@ class RegisterPageTestCase(TestCase):
 class LoginTest(TestCase):
 
     def setUp(self):
-        email="test-password@diff.erents"
+        email="test@test.com"
         password = "LePetitChevalDeManège123123!"
         password2 = "LePetitChevalDeManège123123!"
         last_name = "test last"
@@ -127,15 +127,46 @@ class LoginTest(TestCase):
         self.assertTemplateUsed(reverse('login'))
 
     def test_user_login_nominal_case(self):
-        email="test-password@diff.erents"
+        email="test@test.com"
         password = "LePetitChevalDeManège123123!"
-        response = self.client.post(reverse('register'),
+        response = self.client.post(reverse('login'),
                                                     {'email':email,
                                                     'password':password,})
         self.assertEqual(response.status_code,200)
 
     def test_user_login_unmatching_email(self):
-        pass
+        email="test222@test.com"
+        password = "LePetitChevalDeManège123123!"
+        response = self.client.post(reverse('login'),
+                                                    {'email':email,
+                                                    'password':password,})
+        self.assertEqual(response.status_code, 400)
 
     def test_user_login_unmatching_password(self):
-        pass
+        email="test@test.com"
+        password = "LePetitChevalDeManège123123!222"
+        response = self.client.post(reverse('login'),
+                                                    {'email':email,
+                                                    'password':password,})
+        self.assertEqual(response.status_code, 400)
+
+class LogoutTest(TestCase):
+    
+    def test_logout_nominal_case(self):
+        email="test@test.com"
+        password = "LePetitChevalDeManège123123!"
+        password2 = "LePetitChevalDeManège123123!"
+        last_name = "test last"
+        first_name = "test first"        
+        self.client.post(reverse('register'),
+                                    {'email':email,
+                                    'password':password,
+                                    'password2':password2,
+                                    'last_name':last_name,
+                                    'first_name':first_name})
+        response = self.client.get(reverse('logout'))
+        self.assertEqual(response.status_code,200)
+
+    def test_logout_user_not_logged_in(self):
+        response = self.client.get(reverse('logout'))
+        self.assertEqual(response.status_code, 400)

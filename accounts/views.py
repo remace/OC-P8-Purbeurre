@@ -38,7 +38,8 @@ def register(request):
             return render(request, 'accounts/register.html',status=400)
         else:
             # save the user in database
-            user = User(email=email, password=password) #TODO hash password
+            user = User(email=email) #TODO hash password
+            user.set_password(password)
             user.first_name = first_name
             user.last_name = last_name
             user.save()
@@ -58,35 +59,38 @@ def login_user(request):
     if request.method=='POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        try:
-            user = authenticate(request, email=email, password=password)
-        except e:
-            print(e)
-
+        user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            messages.error(request, f"{user.email} logged in")
+            messages.success(request, f"{user.email} logged in")
             return render(request, 'products/index.html')
         else:
             messages.error(request, "echec de l'identification")
-            return render(request, 'accounts/login.html')
+            return render(request, 'accounts/login.html', status=400)
     else:
         # if it is a get method, render the User login form
         return render(request, 'accounts/login.html')
 
+
 def logout_user(request):
-    logout(request)
-    return render(request, 'products/index.html')
-
-
-
+    if request.user.is_authenticated:
+        logout(request)
+        return render(request, 'products/index.html')
+    else:
+        messages.error(request, "user not logged in")
+        return render(request, 'products/index.html', status=400)
 
 # read
 def profile(request):
-
     if request.user.is_authenticated:
-        pass
-
-    return render(request, 'accounts/profile.html')
-
-
+        context={
+            'user':{
+                'email':request.user.email,
+                'password':request.user.password,
+                'first_name':request.user.first_name,
+                'last_name':request.user.last_name,
+            }
+        }
+        return render(request, 'accounts/profile.html', context=context)
+    else:
+        return render(request, 'accounts/login')
