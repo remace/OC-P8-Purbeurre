@@ -38,7 +38,7 @@ def register(request):
             return render(request, 'accounts/register.html',status=400)
         else:
             # save the user in database
-            user = User(email=email) #TODO hash password
+            user = User.objects.create(email=email, password=password)
             user.set_password(password)
             user.first_name = first_name
             user.last_name = last_name
@@ -47,7 +47,7 @@ def register(request):
             # then connect this user
             if user is not None:
                 login(request, user)
-                return redirect('products/index')
+                return render(request, 'products/index.html', status=302)  
             else:
                 return render(request, 'accounts/register.html')      
     else:
@@ -62,7 +62,7 @@ def login_user(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, f"{user.email} logged in")
+            messages.add_message(request,messages.SUCCESS, f"{user.email} logged in")
             return render(request, 'products/index.html')
         else:
             messages.error(request, "echec de l'identification")
@@ -93,4 +93,4 @@ def profile(request):
         }
         return render(request, 'accounts/profile.html', context=context)
     else:
-        return render(request, 'accounts/login')
+        return render(request, 'accounts/login.html')
