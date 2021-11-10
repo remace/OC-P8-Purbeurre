@@ -14,8 +14,10 @@
                 </div>
                 <div class="col-lg-8 align-self-baseline">
                     <p class="text-white-75 mb-5">recherchez des substituts à vos aliments</p>
-                    <input type='text' id='main-search' name='main-search'/>
-                    <a class="btn btn-primary btn-xl" href="#about">Rechercher</a>
+                    <form action="{% url 'search'%}" method="GET">
+                        <input type='text' id='main-search' name='search'/>
+                        <button type='submit' class="btn btn-primary btn-xl" href="{% url 'search' %}">Rechercher</button>
+                    </form>
                 </div>
             </div>
         </div>

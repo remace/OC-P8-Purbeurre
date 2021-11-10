@@ -1,0 +1,12 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block content%}
+    {% include 'products/header.html' %}
+        <section class='masthead container'>
+            <h1>{{  product.name }}</h1>
+
+        </section>
+
+    {% include 'products/footer.html' %}
+{% endblock content%}

@@ -20,5 +20,6 @@ from products import views
 
 urlpatterns = [
     path('', views.index, name='index' ),
-    path('categories/', views.get_categories, name='get_categories'),
+    path('search/', views.search, name='search'),
+    path('product/', views.product, name='product'),
 ]
