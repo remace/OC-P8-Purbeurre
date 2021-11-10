@@ -19,6 +19,8 @@ then, using python 3.9 (3.10 has problems with psycopg2)
 $> python3.9 -m venv env
 $> source env/bin/activate
 $> python -m pip install -r reqLinux.txt
+$> ./manage.py makemigrations
+$> ./manage.py migrate
 	
 ```
 
