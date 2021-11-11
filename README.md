@@ -14,7 +14,7 @@ studies project on Django web application, agile method, unit testing, versionni
 ## developer's manual
 ### Setup environment
 clone this repository
-then, using python 3.9 (3.10 has problems with psycopg2)
+then, using python <= 3.9 
 ``` 
 $> python3.9 -m venv env
 $> source env/bin/activate
