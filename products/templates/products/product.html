@@ -3,9 +3,81 @@
 
 {% block content%}
     {% include 'products/header.html' %}
-        <section class='masthead container'>
-            <h1>{{  product.name }}</h1>
 
+        <section class='masthead container'>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="row">
+                            <h1>{{  product.name }}</h1>
+                        </div>
+                        <div class="row">
+                            <h2>{{ product.category }} </h2>
+                        </div>
+                        <div class="row">
+                            <h3>nutriscore: {{ product.nutriscore }} </h2>
+                        </div>
+                        <div class="row">
+                            <a href="{{ product.off_link }}">lien openfoodfacts</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <h3>valeurs nutritionnelles</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th colspan="2"> valeur nutritionnelle pour 100g</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>energie ({{product.energy_unit}})</td>
+                                    <td>{{product.energy}}</td>
+                                </tr>
+                                <tr>
+                                    <td>glucides (g)</td>
+                                    <td>{{product.carbohydrates }}</td>
+                                </tr>
+                                <tr>
+                                    <td>dont sucres (g)</td>
+                                    <td>{{product.sugars}}</td>
+                                </tr>
+                                <tr>
+                                    <td>graisses(g)</td>
+                                    <td>{{product.fat}}</td>
+                                </tr>
+                                <tr>
+                                    <td>dont graisses saturées (g)</td>
+                                    <td>{{product.saturated_fat}}</td>
+                                </tr>
+                                <tr>
+                                    <td>fibres (g)</td>
+                                    <td>{{product.fiber}}</td>
+                                </tr>
+                                <tr>
+                                    <td>protéines (g)</td>
+                                    <td>{{product.proteins}}</td>
+                                </tr>
+                                <tr>
+                                    <td>sel (g)</td>
+                                    <td>{{product.salt}}</td>
+                                </tr>
+                                <tr>
+                                    <td>dont sodium (g)</td>
+                                    <td>{{product.sodium}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <form action="{% url 'toggle-favourite' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="next" value="" hidden/>
+                    <input type="text" name="product_name" value="{{product.name}}" hidden/>
+                    <input type="text" name="user_email" value="{{request.user.email}}" hidden/>
+                    <input type='submit' value='sauvegarder dans mes favoris'/>
+                </form>
+            </div>
         </section>
 
     {% include 'products/footer.html' %}
