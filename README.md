@@ -18,10 +18,7 @@ then, using python <= 3.9
 ``` 
 $> python3.9 -m venv env
 $> source env/bin/activate
-$> python -m pip install -r reqLinux.txt
-$> ./manage.py makemigrations
-$> ./manage.py migrate
-	
+$> python -m pip install -r reqLinux.txt	
 ```
 
 ### Setup database
@@ -41,6 +38,12 @@ ALTER ROLE 'Nutella_user' WITH CREATEDB;
 psql#>GRANT ALL PRIVILEGES ON 'Nutella_db' TO 'Nutella_user'
 psql#> \q
 postgres $>exit
+```
+
+then make database migrations
+```
+$> ./manage.py makemigrations
+$> ./manage.py migrate
 ```
 
 ## testing the app
