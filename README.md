@@ -5,7 +5,7 @@
 studies project on Django web application, agile method, unit testing, versionning.
 
 ## Awaited Functionnalities and Constraints
-* search for food products in a postgresql database
+* search for healthier food substitutes in a postgresql database
 * possibility to save a product as a favourite for the user
 * requests not done with ajax
 * responsive GUI
