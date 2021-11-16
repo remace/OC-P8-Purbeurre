@@ -62,7 +62,5 @@ then go to 127.0.0.1:8000 in your web browser
 
 ## useful links
 
-* [project order](https://openclassrooms.com/fr/paths/68/projects/159/assignment)
-* [Trello](https://trello.com/invite/b/MMPgH3xg/30eb1dde28f68f9aec60cc5e2eb01925/p8-openfoodfacts)
 * live website -> still not posted
 * document on conception process -> still not posted
