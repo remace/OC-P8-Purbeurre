@@ -66,14 +66,14 @@ def toggle_favourite(request):
         product.in_users_favourites.remove(user)
     else:
         product.in_users_favourites.add(user)  
-    return redirect(f'product/?id={product.id}')
+    return redirect(f'/product/?id={product.id}')
 
 
 def find_alternatives(request):
     product_id = request.GET['product_id']
     product = Product.objects.get(id=product_id)
     category = product.category
-    products = Product.objects.filter(category=category, nutriscore__lte=product.nutriscore).all() #lt ou lte?
+    products = Product.objects.filter(category=category, nutriscore__lte=product.nutriscore).all() # TODO lt ou lte?
 
     context={}
     context['results']=products
