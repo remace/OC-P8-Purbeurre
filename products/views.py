@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models import F
+from django.contrib.auth.decorators import login_required
 
 from .models import Product, Category
 
@@ -39,21 +41,40 @@ def product(request):
         'proteins': product.proteins_100g,
         'salt': product.salt_100g,
         'sodium': product.sodium_100g,
+        'id': product.id,
     }
 
-      
-    # déterminer si l'aliment est favori de l'utilisateur, pour ça:
 
-        # l'utilisateur est connecté:
-            # chercher si l'aliment est un favori de l'utilisateur
-            # context['product']['is_favourite'] = True or False selon si favori ou non
-            # context['user']['email'] = user.email -> ?
-            # changement de style dans le template: couleur et value du bouton
-        # l'utilisateur n'est pas connecté:
-            # changement de style dans le template: couleur du bouton -> grisé + désactivé
-
-    return render(request, 'products/product.html', context=context)
+    if request.user.is_authenticated:
+        if product.in_users_favourites.all().filter(id=request.user.id):
+            context['product']['is_favourite'] = True
+        else:
+            context['product']['is_favourite'] = False
+        return render(request, 'products/product.html', context=context)
+    else:
+        return render(request, 'user/login')
         
-
+        
+@login_required
 def toggle_favourite(request):
-    return render(request,)
+    product = Product.objects.get(pk=request.POST['product_id'])
+    user = request.user
+
+    
+    if product.in_users_favourites.all().filter(id=user.id):
+        product.in_users_favourites.remove(user)
+    else:
+        product.in_users_favourites.add(user)  
+    return redirect(f'product/?id={product.id}')
+
+
+def find_alternatives(request):
+    product_id = request.GET['product_id']
+    product = Product.objects.get(id=product_id)
+    category = product.category
+    products = Product.objects.filter(category=category, nutriscore__lte=product.nutriscore).all() #lt ou lte?
+
+    context={}
+    context['results']=products
+
+    return render(request,'products/search.html',context=context)

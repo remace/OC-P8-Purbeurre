@@ -139,3 +139,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # change user model classes
 AUTH_USER_MODEL = 'accounts.User'
+
+#pour @login_required
+LOGIN_URL = '/user/login'
