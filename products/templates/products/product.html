@@ -75,11 +75,14 @@
                     {% csrf_token %} 
                     <input type="hidden" name="product_id" value="{{product.id}}" hidden />
                     <input type="hidden" name="is_favourite" value="{{product.is_favourite}}" hidden />
-                    {% if product.is_favourite is False %}
-                        <input class='bg-green' type='submit' value='sauvegarder dans mes favoris'/>
+                    {% if not favourite_toggle_inactive %}
+                        {% if product.is_favourite is False %}
+                            <input class='bg-green' type='submit' value='sauvegarder dans mes favoris'/>
+                        {% else %}
+                            <input class='bg-red' type='submit' value='supprimer de mes favoris'/>
+                        {% endif %}
                     {% else %}
-                        <input class='bg-red' type='submit' value='supprimer de mes favoris'/>
-
+                        <input class='bg-grey' type='submit' value='sauvegarder dans mes favoris' title="Vous devez vous connecter pour pourvoir utiliser cette fonctionnalité" disabled/>
                     {% endif %}
                 </form>
                 <form class="col-12 col-md-6" action="{% url 'find-alternatives' %}" method="get">

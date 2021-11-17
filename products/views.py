@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib import messages
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
@@ -44,16 +45,16 @@ def product(request):
         'id': product.id,
     }
 
-
     if request.user.is_authenticated:
         if product.in_users_favourites.all().filter(id=request.user.id):
             context['product']['is_favourite'] = True
+            context['favourite_toggle_inactive'] = False
         else:
             context['product']['is_favourite'] = False
-        return render(request, 'products/product.html', context=context)
+            context['favourite_toggle_inactive'] = False
     else:
-        return render(request, 'user/login')
-        
+        context['favourite_toggle_inactive']=True
+    return render(request, 'products/product.html', context=context)
         
 @login_required
 def toggle_favourite(request):
