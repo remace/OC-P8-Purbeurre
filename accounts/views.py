@@ -1,36 +1,40 @@
-from django.shortcuts import render, redirect
+""" user authentification views """
+
+from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from validate_email import validate_email
 
 from .models import User
 
+
 def register(request):
+    """ register view """
     if request.method=='POST':
         has_error = False
-        
+
         # get form elements
         email = request.POST.get('email')
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        
+
         # check integrity of data
         if not password==password2:
-            messages.error(request, f"mots de passe différents")
+            messages.error(request, "mots de passe différents")
             has_error=True
-        
+
         if len(password) <= 6:
-            messages.error(request, f"mot de passe trop court")
+            messages.error(request, "mot de passe trop court")
             has_error=True
-        
+
         if not validate_email(email):
-            messages.error(request, f"email invalide")
+            messages.error(request, "email invalide")
             has_error=True
 
         if User.objects.filter(email=email).exists():
-            messages.error(request, f"email déjà utilisé")
+            messages.error(request, "email déjà utilisé")
             has_error=True
 
         # if no error from form validation
@@ -47,15 +51,16 @@ def register(request):
             # then connect this user
             if user is not None:
                 login(request, user)
-                return render(request, 'products/index.html', status=302)  
+                return render(request, 'products/index.html', status=302)
             else:
-                return render(request, 'accounts/register.html')      
+                return render(request, 'accounts/register.html')
     else:
         # if it is a get method, render the User registration form
         return render(request, 'accounts/register.html')
 
 
 def login_user(request):
+    """ login view """
     if request.method=='POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -73,6 +78,7 @@ def login_user(request):
 
 
 def logout_user(request):
+    """ logout view """
     if request.user.is_authenticated:
         logout(request)
         return render(request, 'products/index.html')
@@ -82,6 +88,7 @@ def logout_user(request):
 
 # read
 def profile(request):
+    """profile view"""
     if request.user.is_authenticated:
         context={
             'user':{

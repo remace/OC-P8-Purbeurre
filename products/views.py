@@ -1,34 +1,43 @@
+"""
+views for product utilities
+"""
+
+
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.contrib import messages
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
 
-from .models import Product, Category
+from .models import Product
+
 
 def index(request):
+    ''' view displaying the home page of the website '''
     return render(request, 'products/index.html')
 
+
 def search(request):
+    ''' view displaying search title-matching products'''
     req = request.GET['search']
-    context={}
-    context['search']=req
-    
+    context = {}
+    context['search'] = req
+
     products = Product.objects.filter(name__icontains=req).values()
     context['results'] = products
 
     return render(request, 'products/search.html', context=context)
 
+
 def product(request):
+    ''' view that shows product details '''
     req = request.GET['id']
-    context={}
+    context = {}
     try:
         product = Product.objects.get(id=req)
     except:
         messages.add_message(request, messages.ERROR, "product not found")
         return render(request, 'products/index.html', status=404)
     context['product'] = {
-        'name':product.name,
+        'name': product.name,
         'category': product.category.name,
         'off_link': product.off_link,
         'nutriscore': product.nutriscore,
@@ -53,29 +62,33 @@ def product(request):
             context['product']['is_favourite'] = False
             context['favourite_toggle_inactive'] = False
     else:
-        context['favourite_toggle_inactive']=True
+        context['favourite_toggle_inactive'] = True
     return render(request, 'products/product.html', context=context)
-        
+
+
 @login_required
 def toggle_favourite(request):
+    ''' toggle a product as favourite of a connected user '''
     product = Product.objects.get(pk=request.POST['product_id'])
     user = request.user
 
-    
     if product.in_users_favourites.all().filter(id=user.id):
         product.in_users_favourites.remove(user)
     else:
-        product.in_users_favourites.add(user)  
+        product.in_users_favourites.add(user)
     return redirect(f'product/?id={product.id}')
 
 
 def find_alternatives(request):
+    ''' view getting alternatives to a product '''
     product_id = request.GET['product_id']
     product = Product.objects.get(id=product_id)
     category = product.category
-    products = Product.objects.filter(category=category, nutriscore__lte=product.nutriscore).all() #lt ou lte?
+    products = Product.objects.filter(
+        category=category,
+        nutriscore__lte=product.nutriscore).all()
 
-    context={}
-    context['results']=products
+    context = {}
+    context['results'] = products
 
-    return render(request,'products/search.html',context=context)
+    return render(request, 'products/search.html', context=context)

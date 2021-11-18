@@ -1,3 +1,7 @@
+"""
+models for products app
+"""
+
 from django.db import models
 from accounts.models import User
 
@@ -19,19 +23,55 @@ class Product(models.Model):
     ]
 
     name = models.CharField(max_length=255)
-    nutriscore = models.CharField(max_length=1, choices=NUTRISCORE_CHOICES, default='F') 
+    nutriscore = models.CharField(max_length=1, choices=NUTRISCORE_CHOICES, default='F')
 
     # nutritionnal values per 100g
     energy_unit = models.CharField(max_length=6, choices=ENERGY_UNITS, default = 'kcal')
-    energy_100g = models.DecimalField(max_digits=6,decimal_places=3, null=True, blank=True, default=0)
-    carbohydrates_100g = models.DecimalField(max_digits=6,decimal_places=3, null=True, blank=True, default=0)
-    sugars_100g = models.DecimalField(max_digits=6,decimal_places=3, null=True, blank=True, default=0)
-    fat_100g = models.DecimalField(max_digits=6,decimal_places=3, null=True, blank=True, default=0)
-    saturated_fat_100g = models.DecimalField(max_digits=6, decimal_places=3, null=True, blank=True, default=0)
-    fiber_100g = models.DecimalField(max_digits=6,decimal_places=3, null=True, blank=True, default=0)
-    proteins_100g = models.DecimalField(max_digits=6,decimal_places=3, null=True, blank=True, default=0)
-    salt_100g = models.DecimalField(max_digits=6,decimal_places=3, null=True, blank=True, default=0)
-    sodium_100g = models.DecimalField(max_digits=6,decimal_places=3, null=True, blank=True, default=0)
+    energy_100g = models.DecimalField(max_digits=6,
+                                        decimal_places=3,
+                                        null=True,
+                                        blank=True,
+                                        default=0)
+    carbohydrates_100g = models.DecimalField(max_digits=6,
+                                            decimal_places=3,
+                                            null=True,
+                                            blank=True,
+                                            default=0)
+    sugars_100g = models.DecimalField(max_digits=6,
+                                        decimal_places=3,
+                                        null=True,
+                                        blank=True,
+                                        default=0)
+    fat_100g = models.DecimalField(max_digits=6,
+                                        decimal_places=3,
+                                        null=True,
+                                        blank=True,
+                                        default=0)
+    saturated_fat_100g = models.DecimalField(max_digits=6,
+                                                decimal_places=3,
+                                                null=True,
+                                                blank=True,
+                                                default=0)
+    fiber_100g = models.DecimalField(max_digits=6,
+                                        decimal_places=3,
+                                        null=True,
+                                        blank=True,
+                                        default=0)
+    proteins_100g = models.DecimalField(max_digits=6,
+                                            decimal_places=3,
+                                            null=True,
+                                            blank=True,
+                                            default=0)
+    salt_100g = models.DecimalField(max_digits=6,
+                                        decimal_places=3,
+                                        null=True,
+                                        blank=True,
+                                        default=0)
+    sodium_100g = models.DecimalField(max_digits=6,
+                                        decimal_places=3,
+                                        null=True,
+                                        blank=True,
+                                        default=0)
 
     # link to open food facts page
     off_link = models.CharField(max_length=1024)

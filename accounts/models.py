@@ -1,3 +1,4 @@
+""" User model and model manager """
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
@@ -5,12 +6,13 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 class UserManager(BaseUserManager):
     """ User Model Manager """
     def create_user(self, email, password=None, is_active=True, is_staff=False, is_admin=False):
+        """ create user """
         # authentification keys verification
         if not email:
             raise ValueError('Users must have email Address')
         if not password:
             raise ValueError('User must have Password')
-        
+
         user_obj = self.model(
             email=self.normalize_email(email),
         )
@@ -22,6 +24,7 @@ class UserManager(BaseUserManager):
 
 
     def create_superuser(self, email, password=None):
+        """ create super user """
         user = self.create_user(
             email,
             password=password,
@@ -36,7 +39,7 @@ class User(AbstractBaseUser):
     last_name = models.CharField(max_length=32, blank=True, null=True)
     email= models.EmailField(unique=True)
     # TODO AVATAR ?
-    
+
     # registration create and update fields
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -54,15 +57,19 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
 
     def __str__(self):
+        """ string representing the user """
         return self.email
 
     def get_full_name(self):
+        """ string giving the full name of a user """
         if self.first_name:
             return f'{self.first_name}  {self.last_name}'
         return self.email.split('@')[0]
 
     def has_perm(self, perm, obj=None):
+        """ returns whether a user has permissions """
         return True
-        
+
     def has_module_perms(self, app_label):
+        """ returns whether a user has module perms """
         return True
