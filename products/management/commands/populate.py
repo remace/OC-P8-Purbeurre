@@ -17,11 +17,6 @@ def get_products_from_category(url, n_products):
             rep.append(p)
     return rep
 
-def create_Product(food):
-    pass
-
-
-
 class Command(BaseCommand):
     ''' populates the database with x products from y categories'''
 
@@ -72,6 +67,8 @@ class Command(BaseCommand):
                             salt_100g =  round(prod['nutriments']['salt_100g'],3),
                             sodium_100g =  round(prod['nutriments']['sodium_100g'],3),
                             off_link = f'https://fr.openfoodfacts.org/produit/{ prod["id"]}',
+                            off_thumb_link=prod['image_front_thumb_url'],
+                            off_img_link=prod['image_front_url'],
                             category = c,
                         )
                 except KeyError as e:

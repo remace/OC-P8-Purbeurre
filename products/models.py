@@ -75,6 +75,10 @@ class Product(models.Model):
 
     # link to open food facts page
     off_link = models.CharField(max_length=1024)
+    off_thumb_link = models.CharField(max_length=1024,
+                                        null=True)
+    off_img_link = models.CharField(max_length=1024,
+                                        null=True)
 
     category = models.ForeignKey('Category', null=False, on_delete=models.CASCADE)
 
