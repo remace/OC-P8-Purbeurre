@@ -10,6 +10,7 @@
     <p>password: {{user.password}}</p>
     <p>first_name: {{user.first_name}}</p>
     <p>last_name: {{user.last_name}}</p>
+    <a href="{% url 'list-favourites' %}"> mes favoris</a>
 </section>
 
 {% include 'products/footer.html'%}

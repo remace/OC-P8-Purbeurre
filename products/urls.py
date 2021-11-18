@@ -23,5 +23,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('product/', views.product, name='product'),
     path('find-alternatives/', views.find_alternatives, name='find-alternatives'),
-    path('toggle-favourite/', views.toggle_favourite, name='toggle-favourite')
+    path('toggle-favourite/', views.toggle_favourite, name='toggle-favourite'),
+    path('list-favourites/', views.list_favourites, name='list-favourites')
 ]

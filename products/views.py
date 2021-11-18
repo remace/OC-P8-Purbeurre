@@ -4,7 +4,9 @@ views for product utilities
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
+from accounts.models import User
 from .models import Product
 
 
@@ -21,6 +23,7 @@ def search(request):
 
     products = Product.objects.filter(name__icontains=req).values()
     context['results'] = products
+    context['page']= 'Recherche'
 
     return render(request, 'products/search.html', context=context)
 
@@ -74,7 +77,18 @@ def toggle_favourite(request):
         product.in_users_favourites.remove(user)
     else:
         product.in_users_favourites.add(user)
-    return redirect(f'{ reverse("products") }?id={product.id}')
+    return redirect(f'{ reverse("product") }?id={product.id}')
+
+
+@login_required
+def list_favourites(request):
+    ''' view displaying given user's favourites list '''
+    user = User.objects.get(id=request.user.id)
+    products = Product.objects.filter(in_users_favourites__id=user.id)
+    context={}
+    context['page'] = 'Mes Favoris'
+    context['results'] = products
+    return render(request, 'products/search.html', context=context)
 
 
 def find_alternatives(request):
