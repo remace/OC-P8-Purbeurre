@@ -74,7 +74,7 @@ def toggle_favourite(request):
         product.in_users_favourites.remove(user)
     else:
         product.in_users_favourites.add(user)
-    return redirect(f'{reverse("products")}?id={product.id}')
+    return redirect(f'{ reverse("products") }?id={product.id}')
 
 
 def find_alternatives(request):

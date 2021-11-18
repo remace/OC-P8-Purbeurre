@@ -3,9 +3,9 @@
 
 
 {% block content %}
-    {% include 'products/header.html'%}
+    {% include 'products/nav.html'%}
 
-    <section class="masthead" id="page-top">
+    <header class="masthead" id="page-top">
         <div class="container px-4 px-lg-5 h-100 mt-100">
             <h1>Search</h1>
             <p> Résultats pour '{{ search }}':</p>
@@ -28,7 +28,7 @@
                 {% endif %}
             </div>
         </div>
-    </section>
+    </header>
 
     {% include 'products/footer.html'%}
 {% endblock content%}
