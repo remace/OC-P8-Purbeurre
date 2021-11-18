@@ -1,8 +1,6 @@
 """
 views for product utilities
 """
-
-
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -76,7 +74,7 @@ def toggle_favourite(request):
         product.in_users_favourites.remove(user)
     else:
         product.in_users_favourites.add(user)
-    return redirect(f'product/?id={product.id}')
+    return redirect(f'{reverse("products")}?id={product.id}')
 
 
 def find_alternatives(request):
