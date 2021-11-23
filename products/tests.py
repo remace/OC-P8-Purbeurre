@@ -70,7 +70,6 @@ class ProductPageTestCase(TestCase):
         self.product2 = Product.objects.get(name='produit favori de test')
 
     def test_product_page(self):
-        self.maxDiff=None
         response = self.client.get(reverse('product')+f'?id={self.product.id}')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(reverse('product'))
@@ -114,3 +113,170 @@ class ProductPageTestCase(TestCase):
     def test_product_non_existing(self):
         response = self.client.get(reverse('product')+'?id=50')
         self.assertEqual(response.status_code, 404)
+
+class ListFavouritesTestCase(TestCase):
+    
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create(email='coucou@coucou.fr', password='123456789')
+        self.user.save()
+        self.user2 = User.objects.create(email='coucou2@coucou.fr', password='123456789')
+        self.user2.save()
+        self.category = Category(name='testing category')
+        self.category.save()
+        self.product = Product(
+            name='produit favori de test',
+            nutriscore='C',
+            energy_unit = 'kJ',
+            energy_100g = 3500,
+            carbohydrates_100g = 30.7,
+            sugars_100g = 14.0,
+            fat_100g = 5.9,
+            saturated_fat_100g = 3.0,
+            fiber_100g = 30.0,
+            proteins_100g = 10.0,
+            salt_100g = 2.0,
+            sodium_100g = 0.15,
+            off_link = 'lien_off',
+            off_thumb_link = 'lien_thumb',
+            off_img_link= 'lien_image',
+            category = self.category,
+        )
+        self.product.save()
+        self.product.in_users_favourites.add(self.user)
+        self.product.save()
+        pass
+
+    def test_list_favourites_page_nominal_case(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('list-favourites'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(reverse('search'))
+        
+
+    def test_list_favourite_user_not_logged_in(self):
+        response = self.client.get(reverse('list-favourites'))
+        self.assertEqual(response.status_code, 302)
+
+    def test_list_favourites_zero_favourite(self):
+        self.client.force_login(self.user2)
+        response = self.client.get(reverse('list-favourites'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(reverse('search'))
+
+
+class ToggleFavouriteTestCase(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create(email='coucou@coucou.fr', password='123456789')
+        self.user.save()
+        self.category = Category(name='testing category')
+        self.category.save()
+        self.product = Product(
+            name='produit de test',
+            nutriscore='C',
+            energy_unit = 'kJ',
+            energy_100g = 3500,
+            carbohydrates_100g = 30.7,
+            sugars_100g = 14.0,
+            fat_100g = 5.9,
+            saturated_fat_100g = 3.0,
+            fiber_100g = 30.0,
+            proteins_100g = 10.0,
+            salt_100g = 2.0,
+            sodium_100g = 0.15,
+            off_link = 'lien_off',
+            off_thumb_link = 'lien_thumb',
+            off_img_link= 'lien_image',
+            category = self.category,
+        )
+        self.product.save()
+
+    def test_toggle_favourite_nominal_case(self):
+        self.client.force_login(self.user)
+        payload={}
+        payload['product_id'] = self.product.id
+        db_count_before = Product.objects.filter(in_users_favourites__id=self.user.id).count()
+        response = self.client.post(reverse('toggle-favourite'), payload)
+        db_count_after_add = Product.objects.filter(in_users_favourites__id=self.user.id).count()
+        self.assertEqual(response.status_code, 302)
+        self.assertTemplateUsed(reverse('product'))
+        self.assertEqual(db_count_before+1,db_count_after_add)
+        response = self.client.post(reverse('toggle-favourite'), payload)
+        db_count_after_remove = Product.objects.filter(in_users_favourites__id=self.user.id).count()
+        self.assertEqual(db_count_before,db_count_after_remove)
+
+    def test_toggle_favourite_user_not_logged_in(self):
+        payload={}
+        payload['product_id'] = self.product.id
+        db_count_before = Product.objects.filter(in_users_favourites__id=self.user.id).count()
+        response = self.client.post(reverse('toggle-favourite'), payload)
+        db_count_after_add = Product.objects.filter(in_users_favourites__id=self.user.id).count()
+        self.assertEqual(response.status_code, 302)
+        self.assertTemplateUsed(reverse('login'))
+
+class FindAlternativesTestCase(TestCase):
+    
+    def setUp(self):
+        self.category = Category(name='testing category')
+        self.category.save()
+        self.product = Product(
+            name='produit favori de test',
+            nutriscore='C',
+            energy_unit = 'kJ',
+            energy_100g = 3500,
+            carbohydrates_100g = 30.7,
+            sugars_100g = 14.0,
+            fat_100g = 5.9,
+            saturated_fat_100g = 3.0,
+            fiber_100g = 30.0,
+            proteins_100g = 10.0,
+            salt_100g = 2.0,
+            sodium_100g = 0.15,
+            off_link = 'lien_off',
+            off_thumb_link = 'lien_thumb',
+            off_img_link= 'lien_image',
+            category = self.category,
+        )
+        self.product.save()
+
+        self.product2 = Product(
+            name='produit non-favori de test',
+            nutriscore='B',
+            energy_unit = 'kJ',
+            energy_100g = 3500,
+            carbohydrates_100g = 30.7,
+            sugars_100g = 14.0,
+            fat_100g = 5.9,
+            saturated_fat_100g = 3.0,
+            fiber_100g = 30.0,
+            proteins_100g = 10.0,
+            salt_100g = 2.0,
+            sodium_100g = 0.15,
+            off_link = 'lien_off',
+            off_thumb_link = 'lien_thumb',
+            off_img_link= 'lien_image',
+            category = self.category,
+        )
+        self.product2.save()
+
+    def test_find_alternatives_nominal_case(self):
+        response = self.client.get(reverse('find-alternatives')+f"?product_id={self.product.id}")
+        products = response.context['results'] or null
+        has_worse = False
+        if products:
+            for p in products:
+                if p.nutriscore > self.product.nutriscore:
+                    has_worse = True
+        self.assertEqual(has_worse, False)
+
+    def test_find_alternatives_no_better_nutriscore(self):
+        response = self.client.get(reverse('find-alternatives')+f"?product_id={self.product2.id}")
+        products = response.context['results'] or null
+        has_worse = False
+        if products:
+            for p in products:
+                if p.nutriscore > self.product.nutriscore:
+                    has_worse = True
+        self.assertEqual(has_worse, False)
