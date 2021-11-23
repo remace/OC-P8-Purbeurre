@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from validate_email import validate_email
-from django.urls import reverse
 from .models import User
 
 

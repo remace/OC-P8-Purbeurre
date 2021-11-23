@@ -34,7 +34,7 @@ def product(request):
     context = {}
     try:
         product = Product.objects.get(id=req)
-    except:
+    except Product.DoesNotExist:
         messages.add_message(request, messages.ERROR, "product not found")
         return render(request, 'products/index.html', status=404)
     context['product'] = {

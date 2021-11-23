@@ -21,6 +21,7 @@ class UserManager(BaseUserManager):
         user_obj.is_staff = is_staff
         user_obj.is_admin = is_admin
         user_obj.save(using=self._db)
+        return user_obj
 
 
     def create_superuser(self, email, password=None):
@@ -64,7 +65,7 @@ class User(AbstractBaseUser):
         """ string giving the full name of a user """
         if self.first_name:
             return f'{self.first_name}  {self.last_name}'
-        return self.email.split('@')[0]
+        return self.email.split('@',maxsplit=1)[0]
 
     def has_perm(self, perm, obj=None):
         """ returns whether a user has permissions """
