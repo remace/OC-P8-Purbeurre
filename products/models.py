@@ -27,7 +27,7 @@ class Product(models.Model):
 
     # nutritionnal values per 100g
     energy_unit = models.CharField(max_length=6, choices=ENERGY_UNITS, default = 'kcal')
-    energy_100g = models.DecimalField(max_digits=6,
+    energy_100g = models.DecimalField(max_digits=10,
                                         decimal_places=3,
                                         null=True,
                                         blank=True,

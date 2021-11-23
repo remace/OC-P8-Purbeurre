@@ -99,7 +99,7 @@ class RegisterPageTestCase(TestCase):
                                                 'password2':password,
                                                 'last_name':last_name,
                                                 'first_name':first_name})
-        # TODO asserts?
+        self.assertEqual(response.status_code,400)
 
     def test_user_registration_unmatching_passwords(self):
         """ test user registration with different passwords """
@@ -114,7 +114,7 @@ class RegisterPageTestCase(TestCase):
                                                 'password2':password2,
                                                 'last_name':last_name,
                                                 'first_name':first_name})
-        #TODO asserts?
+        self.assertEqual(response.status_code,400)
 
 class LoginTest(TestCase):
     """ class for testing Login view """

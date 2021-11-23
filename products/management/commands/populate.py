@@ -57,7 +57,7 @@ class Command(BaseCommand):
                             name= prod['product_name'],
                             nutriscore = prod['nutriscore_grade'].upper(),
                             energy_unit = energy_unit,
-                            energy_100g = round(energy_100g,3),
+                            energy_100g = round(energy_100g,9),
                             carbohydrates_100g = round(prod['nutriments']['carbohydrates_100g'],3),
                             sugars_100g =  round(prod['nutriments']['sugars_100g'],3),
                             fat_100g =  round(prod['nutriments']['fat_100g'],3),
