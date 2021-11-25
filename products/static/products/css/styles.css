@@ -1,1 +1,22 @@
+
 @import 'bootstrap.css';
+
+.nutriscore-A{
+    background-color: #038141 !important;
+}
+.nutriscore-B{
+    background-color: #85bb2f !important;
+}
+.nutriscore-C{
+    background-color: #fecb02 !important;
+}
+.nutriscore-D{
+    background-color: #ee8100 !important;
+}
+.nutriscore-E{
+ background-color: #e63e11 !important;
+}
+.nutriscore-F{
+    background-color: #000000 !important;
+}
+

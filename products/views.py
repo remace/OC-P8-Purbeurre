@@ -19,16 +19,27 @@ def search(request):
     ''' view displaying search title-matching products'''
     req = request.GET['search']
     context = {}
+    context['results'] = []
     context['search'] = req
 
     products = Product.objects.filter(name__icontains=req).values()
-    context['results'] = products
+    for product in products:
+        context['results'].append(product)
+    users_favourite_products = []
+    if request.user.is_authenticated:
+        favourite_products = (Product.objects
+                                .filter(in_users_favourites__id=request.user.id)
+                                .values()
+                                )
+        for favourite_product in favourite_products:
+            users_favourite_products.append(favourite_product)
+    for product in context['results']:
+        product['is_favourite'] = product in users_favourite_products
     context['page']= 'Recherche'
-
     return render(request, 'products/search.html', context=context)
 
 
-def product(request):
+def product_view(request):
     ''' view that shows product details '''
     req = request.GET['id']
     context = {}
@@ -72,14 +83,21 @@ def product(request):
 @login_required
 def toggle_favourite(request):
     ''' toggle a product as favourite of a connected user '''
-    product = Product.objects.get(pk=request.POST['product_id'])
+    if request.method == 'POST':
+        product_id = request.POST['product_id']
+        next_page = f'{ reverse("product") }?id={product_id}'
+    else:
+        product_id = request.GET['product_id']
+        search_str = request.GET['search']
+        next_page= f'{ reverse("search") }?search={search_str}'
+    product = Product.objects.get(pk=product_id)
     user = request.user
 
     if product.in_users_favourites.all().filter(id=user.id):
         product.in_users_favourites.remove(user)
     else:
         product.in_users_favourites.add(user)
-    return redirect(f'{ reverse("product") }?id={product.id}')
+    return redirect(next_page)
 
 
 @login_required
@@ -104,5 +122,5 @@ def find_alternatives(request):
 
     context = {}
     context['results'] = products
-
+    # TODO floppy_disk logo to tell if favourites are displayed
     return render(request, 'products/search.html', context=context)

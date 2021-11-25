@@ -16,11 +16,79 @@ class IndexPageTestCase(TestCase):
 
 class SearchPageTestCase(TestCase):
     """tests on search view"""
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create(email='coucou@coucou.fr', password='123456789')
+        self.user.save()
+
+        self.category = Category(name='testing category')
+        self.category.save()
+        self.product = Product(
+            name='produit favori de test',
+            nutriscore='C',
+            energy_unit = 'kJ',
+            energy_100g = 3500,
+            carbohydrates_100g = 30.7,
+            sugars_100g = 14.0,
+            fat_100g = 5.9,
+            saturated_fat_100g = 3.0,
+            fiber_100g = 30.0,
+            proteins_100g = 10.0,
+            salt_100g = 2.0,
+            sodium_100g = 0.15,
+            off_link = 'lien_off',
+            off_thumb_link = 'lien_thumb',
+            off_img_link= 'lien_image',
+            category = self.category,
+        )
+        self.product.save()
+        self.product.in_users_favourites.add(self.user)
+        self.product.save()
+
+        self.product2 = Product(
+            name='produit non-favori de test',
+            nutriscore='B',
+            energy_unit = 'kJ',
+            energy_100g = 3500,
+            carbohydrates_100g = 30.7,
+            sugars_100g = 14.0,
+            fat_100g = 5.9,
+            saturated_fat_100g = 3.0,
+            fiber_100g = 30.0,
+            proteins_100g = 10.0,
+            salt_100g = 2.0,
+            sodium_100g = 0.15,
+            off_link = 'lien_off',
+            off_thumb_link = 'lien_thumb',
+            off_img_link= 'lien_image',
+            category = self.category,
+        )
+        self.product2.save()
+        self.product = Product.objects.get(name='produit non-favori de test')
+        self.product2 = Product.objects.get(name='produit favori de test')
+
     def test_search_page(self):
         """search results page should return 200 and use the good template, then return good data"""
         response = self.client.get(reverse('search')+'?search=Harry')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(reverse('search'))
+
+    def test_search_user_connected_with_favourites(self):
+        """ favourites should have a is_favourite flag set to True, else false """
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('search')+'?search=produit')
+        self.assertEqual(response.context['results'][0].get('is_favourite','pas renseigné'), True)
+        self.assertEqual(response.context['results'][1].get('is_favourite','pas renseigné'), False)
+
+    def test_search_user_not_connected(self):
+        """ every product should be said not favourite """
+        response = self.client.get(reverse('search')+'?search=produit')
+
+        has_favourite = 0
+        for product in response.context['results']:
+            has_favourite += 1 if product.get('is_favourite') else 0
+        self.assertEqual(has_favourite,0)
+
 
 class ProductPageTestCase(TestCase):
     """tests on product View"""

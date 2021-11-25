@@ -7,25 +7,41 @@
 
     <header class="masthead" id="page-top">
         <div class="container px-4 px-lg-5 h-100 mt-100">
-            
+            <div class="result_list container-fluid">
             <h1>{{page}}</h1>
-            {% if page == "Recherche "%}
-                <p> Résultats pour '{{ search }}':</p>
-            {% endif %}
-            <div class="result_list">
+                {% if page == "Recherche"%}
+                    <p> Résultats pour '{{ search }}':</p>
+                {% endif %}
                 {% if results %}
+                    <div class="row g-15">
                     {% for result in results%}
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <h3 class="card-title">{{ result.name }}</h3>
+                        <div class="card col-12 col-md-4 col-lg-3 g-15">
+                            <div class="card-body position-relative">
+                                <div class=" row .nutriscore-{{result.nutriscore}} nutriscore-logo rounded-circle position-absolute top-0 end-0">
+                                    <div class=" col-md-3 nutriscore-text align-self-center top-50 start-50 text-black font-weight-bold">
+                                        {{result.nutriscore}}
+                                    </div>
+                                </div>
+                                <div class="row photo">
+                                    <img src="{{result.off_img_link}}" alt="{{result.name}}">
                                 </div>
                                 <div class="row">
-                                    <p class="card-text"><a href="{% url 'product'%}?id={{result.id}}">lien</a></p>
+                                    <h4 class="card-title">{{ result.name }}</h4>
                                 </div>
+                                <div class="row">
+                                    <p class="card-text"><a href="{% url 'product'%}?id={{ result.id }}">lien</a></p>
+                                </div>
+                                <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;search={{ search }}">
+                                {% if result.is_favourite %}
+                                <i class="fas fa-save"></i> supprimer des favoris
+                                {% else %}
+                                <i class="far fa-save"></i> sauvegarder en favori
+                                {% endif %}
+                                </a></div>
                             </div>
                         </div>
                     {% endfor %}
+                    </div>
                 {% else %}
                     <p>aucun résultat, désolé! </p>
                 {% endif %}
