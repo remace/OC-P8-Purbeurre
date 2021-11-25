@@ -9,7 +9,7 @@
         <div class="container px-4 px-lg-5 h-100 mt-100">
             <div class="result_list container-fluid">
             <h1>{{page}}</h1>
-                {% if page == "Recherche"%}
+                {% if page == "Recherche" %}
                     <p> Résultats pour '{{ search }}':</p>
                 {% endif %}
                 {% if results %}
@@ -31,7 +31,15 @@
                                 <div class="row">
                                     <p class="card-text"><a href="{% url 'product'%}?id={{ result.id }}">lien</a></p>
                                 </div>
-                                <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;search={{ search }}">
+
+                                {% if page == "Recherche" %}
+                                    <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=search&amp;search={{ search }}">
+                                {% elif page == "Find Alternatives" %}
+                                    <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=find-alternatives&amp;from_id={{product_id}}">
+                                {% elif page == "Mes Favoris" %}
+                                    <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=list-favourites">
+                                {% endif %}
+                                
                                 {% if result.is_favourite %}
                                 <i class="fas fa-save"></i> supprimer des favoris
                                 {% else %}

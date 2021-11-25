@@ -88,8 +88,15 @@ def toggle_favourite(request):
         next_page = f'{ reverse("product") }?id={product_id}'
     else:
         product_id = request.GET['product_id']
-        search_str = request.GET['search']
-        next_page= f'{ reverse("search") }?search={search_str}'
+        next_page = request.GET['next_page']
+        print(f'next_page: {next_page}')
+        if next_page == 'search':
+            search_str = request.GET['search']
+            next_page= f'{ reverse("search") }?search={search_str}'
+        elif next_page == 'find-alternatives':
+            from_id = request.GET['from_id']
+            next_page = f'{reverse("find-alternatives")}?product_id={from_id}'
+
     product = Product.objects.get(pk=product_id)
     user = request.user
 
@@ -104,10 +111,12 @@ def toggle_favourite(request):
 def list_favourites(request):
     ''' view displaying given user's favourites list '''
     user = User.objects.get(id=request.user.id)
-    products = Product.objects.filter(in_users_favourites__id=user.id)
+    products = Product.objects.filter(in_users_favourites__id=user.id).values()
     context={}
     context['page'] = 'Mes Favoris'
     context['results'] = products
+    for element in context['results']:
+        element['is_favourite'] = True
     return render(request, 'products/search.html', context=context)
 
 
@@ -118,9 +127,25 @@ def find_alternatives(request):
     category = product.category
     products = Product.objects.filter(
         category=category,
-        nutriscore__lte=product.nutriscore).all()
+        nutriscore__lte=product.nutriscore).values()
 
     context = {}
-    context['results'] = products
-    # TODO floppy_disk logo to tell if favourites are displayed
+    context['product_id']=product_id
+    context['results'] = []
+    for product in products:
+        context['results'].append(product)
+
+    # list all the user's favourite products
+    users_favourite_products = []
+    if request.user.is_authenticated:
+        favourite_products = (Product.objects
+                                .filter(in_users_favourites__id=request.user.id)
+                                .values()
+                                )
+        for favourite_product in favourite_products:
+            users_favourite_products.append(favourite_product)
+
+    for product in context['results']:
+        product['is_favourite'] = product in users_favourite_products
+    context['page']= 'Find Alternatives'
     return render(request, 'products/search.html', context=context)
