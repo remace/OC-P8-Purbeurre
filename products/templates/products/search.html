@@ -25,6 +25,20 @@
                                 <div class="row photo">
                                     <img src="{{result.off_img_link}}" alt="{{result.name}}">
                                 </div>
+                                
+                                {% comment %}
+                                remettre en photo du haut de carte: card
+
+                                syntaxe:
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="..." alt="Card image cap">
+                                    <div class="card-body">
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                </div>
+
+
+                                {% endcomment %}
                                 <div class="row">
                                     <h4 class="card-title">{{ result.name }}</h4>
                                 </div>
