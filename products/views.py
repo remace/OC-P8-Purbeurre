@@ -15,6 +15,11 @@ def index(request):
     return render(request, 'products/index.html')
 
 
+def legal_notices(request):
+    '''view rendering the legal notices page of the site'''
+    return render(request,'products/legal-notices.html')
+
+
 def search(request):
     ''' view displaying search title-matching products'''
     req = request.GET['search']

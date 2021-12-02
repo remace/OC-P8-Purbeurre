@@ -11,6 +11,7 @@
 .nutriscore-text{
     color: white;
     font-weight: 600;
+    transform: translate(-5%,2%);
 }
 
 .nutriscore-A{
