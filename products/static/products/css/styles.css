@@ -11,7 +11,7 @@
 .nutriscore-text{
     color: white;
     font-weight: 600;
-    transform: translate(-5%,2%);
+    transform: translate(-1px,1px)
 }
 
 .nutriscore-A{
@@ -33,3 +33,11 @@
     background-color: #000000 !important;
 }
 
+/*
+.card-deck{
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+*/

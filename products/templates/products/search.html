@@ -8,63 +8,87 @@
     <header class="masthead" id="page-top">
         <div class="container px-4 px-lg-5 h-100 mt-100">
             <div class="result_list container-fluid">
-            <h1 class="text-white">{{page}}</h1>
+                
                 {% if page == "Recherche" %}
                     <p class="text-white"> Résultats pour '{{ search }}':</p>
+                {% elif page == "Find-Alternatives" %}
+                    <p class="text-white"> Alternatives Proposées</p>
+                {% elif page == "Favourites"%}
+                    <p class="text-white"> Mes Favoris</p>
                 {% endif %}
+
                 {% if results %}
-                    <div class=" row">
-                        <div class="card-deck">
+                    <div class="row">
                         {% for result in results%}
-                            <div class="card col-12 col-md-4 col-lg-3 g-15">
-                                <div class="card-body position-relative">
+                            {% comment %}
+                            <div class="card search-product-card col-12 col-md-4 col-lg-3">
+                                <a href="{% url 'product'%}?id={{ result.id }}">
+                                    <!-- logo nutriscore-->
                                     <div class=" row nutriscore-{{result.nutriscore}} nutriscore-logo rounded-circle position-absolute top-0 end-0">
                                         <div class=" col-md-3 nutriscore-text align-self-center top-50 start-50 font-weight-bold">
                                             {{result.nutriscore}}
                                         </div>
                                     </div>
-                                    <div class="row photo">
-                                        <img src="{{result.off_img_link}}" alt="{{result.name}}">
-                                    </div>
+                                    <!-- Product image -->
+                                    <img class="card-img-top" src="{{result.off_img_link}}" alt="{{result.name}}">
                                     
-                                    {% comment %}
-                                    remettre en photo du haut de carte: card
-
-                                    syntaxe:
-                                    <div class="card" style="width: 18rem;">
-                                        <img class="card-img-top" src="..." alt="Card image cap">
-                                        <div class="card-body">
-                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                        </div>
-                                    </div>
-
-
-                                    {% endcomment %}
-                                    <div class="row">
+                                    <!-- Product name and favourite toggle-->
+                                    <div class="card-body">
                                         <h4 class="card-title">{{ result.name }}</h4>
+                                        {% if page == "Recherche" %}
+                                            <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=search&amp;search={{ search }}"></div>
+                                        {% elif page == "Find Alternatives" %}
+                                            <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=find-alternatives&amp;from_id={{product_id}}"></div>
+                                        {% elif page == "Mes Favoris" %}
+                                            <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=list-favourites"></div>
+                                        {% endif %}
                                     </div>
-                                    <div class="row">
-                                        <p class="card-text"><a href="{% url 'product'%}?id={{ result.id }}">lien</a></p>
+                                    <div class="card-footer">
+                                        {% if result.is_favourite %}
+                                        <i class="fas fa-save"></i> supprimer des favoris</a>
+                                        {% else %}
+                                        <i class="far fa-save"></i> sauvegarder en favori</a>
+                                        {% endif %}
                                     </div>
-
-                                    {% if page == "Recherche" %}
-                                        <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=search&amp;search={{ search }}">
-                                    {% elif page == "Find Alternatives" %}
-                                        <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=find-alternatives&amp;from_id={{product_id}}">
-                                    {% elif page == "Mes Favoris" %}
-                                        <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=list-favourites">
-                                    {% endif %}
-                                    
-                                    {% if result.is_favourite %}
-                                    <i class="fas fa-save"></i> supprimer des favoris
-                                    {% else %}
-                                    <i class="far fa-save"></i> sauvegarder en favori
-                                    {% endif %}
-                                    </a></div>
-                                </div>
+                                </a>
                             </div>
+                            {% endcomment %}
+                                   
+                            <div class="card search-product-card col-12 col-md-4 col-lg-3 g-15">
+                                <a href="{% url 'product'%}?id={{ result.id }}">
+                                    <div class="card-body position-relative">
+                                        <div class=" row nutriscore-{{result.nutriscore}} nutriscore-logo rounded-circle position-absolute top-0 end-0">
+                                            <div class=" col-md-3 nutriscore-text align-self-center top-50 start-50 font-weight-bold">
+                                                {{result.nutriscore}}
+                                            </div>
+                                        </div>
+                                        <div class="row photo">
+                                            <img src="{{result.off_img_link}}" alt="{{result.name}}">
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <h4 class="card-title">{{ result.name }}</h4>
+                                        </div>
+
+                                        {% if page == "Recherche" %}
+                                            <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=search&amp;search={{ search }}">
+                                        {% elif page == "Find Alternatives" %}
+                                            <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=find-alternatives&amp;from_id={{product_id}}">
+                                        {% elif page == "Mes Favoris" %}
+                                            <div><a href="{% url 'toggle-favourite' %}?product_id={{ result.id }}&amp;next_page=list-favourites">
+                                        {% endif %}
+                                        
+                                        {% if result.is_favourite %}
+                                        <i class="fas fa-save"></i> supprimer des favoris
+                                        {% else %}
+                                        <i class="far fa-save"></i> sauvegarder en favori
+                                        {% endif %}
+                                        </a></div>
+                                    </div>
+                                </a>
+                            </div>
+                            
                         {% endfor %}
-                        </div>
                     </div>
                 {% else %}
                     <p>aucun résultat, désolé! </p>

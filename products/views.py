@@ -118,7 +118,7 @@ def list_favourites(request):
     user = User.objects.get(id=request.user.id)
     products = Product.objects.filter(in_users_favourites__id=user.id).values()
     context={}
-    context['page'] = 'Mes Favoris'
+    context['page'] = 'Favorites'
     context['results'] = products
     for element in context['results']:
         element['is_favourite'] = True
@@ -152,5 +152,5 @@ def find_alternatives(request):
 
     for product in context['results']:
         product['is_favourite'] = product in users_favourite_products
-    context['page']= 'Find Alternatives'
+    context['page']= 'Find-Alternatives'
     return render(request, 'products/search.html', context=context)
