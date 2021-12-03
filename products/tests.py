@@ -363,7 +363,10 @@ class FindAlternativesTestCase(TestCase):
         self.product2.save()
 
     def test_find_alternatives_nominal_case(self):
-        """ find_alternatives view should return 200 and use search template. result shouldn't print worse products on nutriscore"""
+        """ 
+        find_alternatives view should return 200 and use search template. 
+        result shouldn't print worse products on nutriscore
+        """
         response = self.client.get(reverse('find-alternatives')+f"?product_id={self.product.id}")
         products = response.context['results'] or None
         has_worse = False
