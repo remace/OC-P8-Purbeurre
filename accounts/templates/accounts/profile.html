@@ -4,14 +4,21 @@
 
 {% include 'products/nav.html'%}
 
-<section class="page-section">
-    <h1>Hello World</h1>
-    <p>email: {{user.email}}</p>
-    <p>password: {{user.password}}</p>
-    <p>first_name: {{user.first_name}}</p>
-    <p>last_name: {{user.last_name}}</p>
-    <a href="{% url 'list-favourites' %}"> mes favoris</a>
-</section>
+<header class="masthead">
+    <div class="container">
+        <h1 class="col-12 username text-white">
+            Ahoy! <br/>
+            {% if user.first_name != None and user.last_name != None %}
+                {{user.first_name}} {{user.last_name}}
+            {% else %}
+                
+            {% endif %}
+        </h1>
+        <div class="card profile-card col-12">
+            <p>email: {{user.email}}</p>
+        </div>
+    </div>
+</header>
 
 {% include 'products/footer.html'%}
 

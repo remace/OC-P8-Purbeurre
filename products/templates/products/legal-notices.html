@@ -5,20 +5,19 @@
 {% block content %}
     {% include 'products/nav.html'%}  
 
-    <div class="page-section bg-primary">
+    <header class="masthead">
         <div class="container">
-            <h1 class="text-center"> Mentions Légales</h1>
-            <div class="card">
+            <h1 class="text-center text-white"> Mentions Légales</h1>
+            <div class="card legal-notice-card">
                 <p>site réalisé par Rémi Tauvel pour PurBeurre (entreprise fictive dans le cadre d'une formation au développement)</p>
                 <p>données et images des produits: <a href="https://fr.openfoodfacts.org">OpenFoodFacts</a></p>
                 <p>template Bootstrap: <a href="https://startbootstrap.com/theme/creative"> creative</a> </p>
                 <p>Site hébergé sur <a href="https://www.heroku.com">Heroku</a></p>
                 <p>Image de fond : photo by Olenka Kotyk, "Unsplash"</p>
-                <p>icône carotte par Fabien Jouin, on <a href="https://thenounproject.com/term/carrot/29691/"></a></p>
+                <p>icône carotte par Fabien Jouin, on <a href="https://thenounproject.com/term/carrot/29691/">the Noun Project</a></p>
                 <p>Autres icônes: <a href="https://fontawesome.com">Font Awesome</a>
             </div>
         </div>
-        
-    </div>
+    </header>
     {% include 'products/footer.html'%}
 {% endblock content%}

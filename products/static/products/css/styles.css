@@ -70,3 +70,38 @@
 .left-column {
     justify-content: center;
 }
+
+.username{
+   text-align: center;
+}
+
+.profile-card{
+    text-align: center;
+}
+
+.register-form{
+    justify-content: center;
+}
+
+.login-form{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.register-form form input,
+.login-form form input{
+    margin-top: 20px;
+}
+
+.login-form p{
+    margin-top: 50px;
+}
+
+.legal-notice-card{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-start;
+}
