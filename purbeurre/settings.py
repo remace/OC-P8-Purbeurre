@@ -21,10 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 
-# for debug-toolbar, should be deleted in production
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+INTERNAL_IPS = []
 
 
 # Application definition
@@ -102,8 +99,6 @@ else:
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
     ALLOWED_HOSTS = []
-    INSTALLED_APPS.append('debug_toolbar')
-    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
     MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
 
 

@@ -23,10 +23,4 @@ urlpatterns = [
     path('', include('products.urls')),
     path('user/', include('accounts.urls')),
 ]
-
-if os.environ.get('ENV')!= 'PRODUCTION':
-    import debug_toolbar
-    urlpatterns .append(
-        path('__debug__/', include(debug_toolbar.urls))
-    )
     
