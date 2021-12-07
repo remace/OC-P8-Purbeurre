@@ -87,7 +87,7 @@ DATABASES = {
 }
 
 if os.environ.get('ENV') == 'PRODUCTION':
-
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     DEBUG = False
 
     ALLOWED_HOSTS = ['remace-purbeurre.herokuapp.com']
@@ -97,7 +97,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
 
 else:
     # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SECRET_KEY = "secret_not_secure_cause_too easy to control"
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
