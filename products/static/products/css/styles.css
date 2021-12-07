@@ -33,11 +33,17 @@
     background-color: #000000 !important;
 }
 
-/*
-.card-deck{
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
+.photo{
+    justify-content: center;
 }
-*/
+
+.photo img{
+    max-height: 200px;
+    width:auto;
+}
+
+.card{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+}
