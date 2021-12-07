@@ -47,3 +47,26 @@
     flex-flow: row wrap;
     align-items: flex-end;
 }
+
+.image-container{
+    justify-content: center;
+}
+
+
+.image-container img{
+    max-height: 300px;
+    width:auto;
+    
+}
+
+.left-column{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: space-around;
+
+}
+
+.left-column {
+    justify-content: center;
+}

@@ -8,10 +8,10 @@
             <div class="container px-4 px-lg-5 h-100">
                 <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
                     <div class="card">
-                        <div class="row">
+                        <div class="row col-12">
                             <div class="col-12 col-md-6">
-                                <div class="row">
-                                    <img src="{{product.off_img_link}}" alt="{{product.off_img_link}}" class="">
+                                <div class="row image-container">
+                                    <img src="{{product.off_img_link}}" alt="{{product.off_img_link}}">
                                 </div>
                                 <div class="row">
                                     <h1>{{  product.name }}</h1>
@@ -26,9 +26,9 @@
                                     <a href="{{ product.off_link }}">lien openfoodfacts</a>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
-                                <h3>valeurs nutritionnelles</h3>
-                                <table class="mx-auto">
+                            <div class="col-12 col-md-6 left-column">
+                                <h3 class="col-12"> valeurs nutritionnelles</h3>
+                                <table class="mx-auto col-12">
                                     <thead>
                                         <tr>
                                             <th colspan="2"> valeur nutritionnelle pour 100g</th>
@@ -75,7 +75,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row col-12">
                             <form class="col-12 col-md-6" action="{% url 'toggle-favourite' %}" method="POST">
                                 {% csrf_token %} 
                                 <input type="hidden" name="product_id" value="{{product.id}}" hidden />
