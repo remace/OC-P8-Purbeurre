@@ -63,7 +63,7 @@ class Command(BaseCommand):
                         energy_unit = 'kJ'
                         energy_100g = prod['nutriments']['energy-kj_100g']
 
-                    if 'nutriscore_grade' in prod:
+                    if 'nutriscore_grade' in prod and 'id' in prod:
                         product = Product(
                             name = prod['product_name'],
                             nutriscore = prod['nutriscore_grade'].upper(),
