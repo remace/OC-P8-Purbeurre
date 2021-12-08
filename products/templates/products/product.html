@@ -37,39 +37,39 @@
                                     <tbody>
                                         <tr>
                                             <td>energie ({{product.energy_unit}})</td>
-                                            <td>{{product.energy_100g}}</td>
+                                            <td>{% if product.energy_100g >= 0 %} {{product.energy_100g}}{% else %} N/A{% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>glucides (g)</td>
-                                            <td>{{product.carbohydrates_100g }}</td>
+                                            <td>{% if product.carbohydrates_100g >= 0 %} {{product.carbohydrates_100g}}{% else %} N/A{% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>dont sucres (g)</td>
-                                            <td>{{product.sugars_100g}}</td>
+                                            <td>{% if product.sugars_100g >= 0 %} {{product.sugars_100g}}{% else %} N/A{% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>graisses(g)</td>
-                                            <td>{{product.fat_100g}}</td>
+                                            <td>{% if product.fat_100g >= 0 %} {{product.fat_100g}}{% else %} N/A{% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>dont graisses saturées (g)</td>
-                                            <td>{{product.saturated_fat_100g}}</td>
+                                            <td>{% if product.saturated_fat_100g >= 0 %} {{product.saturated_fat_100g}}{% else %} N/A{% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>fibres (g)</td>
-                                            <td>{{product.fiber_100g}}</td>
+                                            <td>{% if product.fiber_100g >= 0 %} {{product.fiber_100g}}{% else %} N/A{% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>protéines (g)</td>
-                                            <td>{{product.proteins_100g}}</td>
+                                            <td>{% if product.proteins_100g >= 0 %} {{product.proteins_100g}}{% else %} N/A{% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>sel (g)</td>
-                                            <td>{{product.salt_100g}}</td>
+                                            <td>{% if product.salt_100g >= 0 %} {{product.salt_100g}}{% else %} N/A{% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td>dont sodium (g)</td>
-                                            <td>{{product.sodium_100g}}</td>
+                                            <td>{% if product.sodium_100g >= 0 %} {{product.sodium_100g}}{% else %} N/A{% endif %}</td>
                                         </tr>
                                     </tbody>
                                 </table>
