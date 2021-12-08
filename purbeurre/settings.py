@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,18 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$_wm9yu%)i_37had0+%43-b-+-$%ml!h3nyyb-z87l)&txy+r*'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-# for debug-toolbar, should be deleted in production
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+INTERNAL_IPS = []
 
 
 # Application definition
@@ -42,10 +33,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar', # should be deleted in production
     'products',
     'accounts',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +46,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'purbeurre.urls'
@@ -92,6 +82,25 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+if os.environ.get('ENV') == 'PRODUCTION':
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    DEBUG = False
+
+    ALLOWED_HOSTS = ['remace-purbeurre.herokuapp.com']
+
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
+    MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+
+else:
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = "secret_not_secure_cause_too easy to control"
+
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
+    ALLOWED_HOSTS = []
+    
 
 
 # Password validation
@@ -142,3 +151,12 @@ AUTH_USER_MODEL = 'accounts.User'
 
 #pour @login_required
 LOGIN_URL = '/user/login'
+
+
+if os.environ.get('ENV') == 'PRODUCTION':
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = os.path.join(PROJECT_ROOT,'staticfiles')
+    STATICFILES_DIRS = [
+        os.path.join(PROJECT_ROOT, 'static')
+    ]
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

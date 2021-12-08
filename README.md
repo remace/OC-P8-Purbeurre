@@ -29,15 +29,7 @@ postgres$> initdb --locale $lang -E UTF8 -D '/var/lib/postgres/data/'
 postgres$> exit
 user$> sudo systemctl enable --now postgresql.service
 user$> sudo su - postgres
-postgres$> psql
-psql#> CREATE DATABASE 'Nutella_db';
-psql#> CREATE USER 'Nutella_db' WITH PASSWORD 'Nutella_pwd';
-psql#> ALTER ROLE 'Nutella_user' SET client_encoding TO 'utf8'; ALTER ROLE 'Nutella_user' SET default_transaction_isolation TO 'read committed';
-ALTER ROLE 'Nutella_user' SET timezone TO 'UTC';
-ALTER ROLE 'Nutella_user' WITH CREATEDB;
-psql#>GRANT ALL PRIVILEGES ON 'Nutella_db' TO 'Nutella_user'
-psql#> \q
-postgres $>exit
+postgres$> psql -f prepare_database.sql
 ```
 
 then make database migrations
@@ -62,5 +54,4 @@ then go to 127.0.0.1:8000 in your web browser
 
 ## useful links
 
-* live website -> still not posted
-* document on conception process -> still not posted
+* live website -> [https://remace-purbeurre.herokuapp.com](https://remace-purbeurre.herokuapp.com)
