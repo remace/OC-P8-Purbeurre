@@ -10,4 +10,4 @@ ALTER ROLE "Nutella_user" SET client_encoding TO "utf8"; ALTER ROLE "Nutella_use
 ALTER ROLE "Nutella_user" SET timezone TO "UTC";
 ALTER ROLE "Nutella_user" WITH CREATEDB;
 ALTER DATABASE "Nutella_db" OWNER TO "Nutella_user";
-GRANT ALL PRIVILEGES ON "Nutella_db" TO "Nutella_user";
+GRANT ALL PRIVILEGES ON "Nutella_db" TO "Nutella_user"; -- returns ' "Nutella_db database doesn't exist" '
