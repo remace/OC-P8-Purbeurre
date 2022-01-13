@@ -1,5 +1,6 @@
 """ unit tests for views in Product module"""
 from django.test import TestCase, Client
+from selenium import webdriver
 
 from django.urls import reverse
 from accounts.models import User
@@ -72,6 +73,23 @@ class SearchPageTestCase(TestCase):
         response = self.client.get(reverse('search')+'?search=Harry')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(reverse('search'))
+
+    def functionnal_test_search_page(self):
+        """ search form should redirect to search URL """
+        driver = webdriver.Firefox()
+        
+        driver.get('127.0.0.1:5000/')
+        search_field = driver.find_element_by_id("") # todo
+        search_field.clear()
+
+        search_field.send_keys("produit")
+        search_field.submit()
+
+        self.assertEqual(driver.current_url,url('search'))
+
+        driver.quit()
+
+
 
     def test_search_user_connected_with_favourites(self):
         """ favourites should have a is_favourite flag set to True, else false """

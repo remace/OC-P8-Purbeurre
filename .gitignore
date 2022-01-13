@@ -1,6 +1,7 @@
 env/*
 env
+.vscode
 
-
-*/__pycache__/*
-products/management/commands/__pycache__/*
+__pycache__/
+products/migrations/
+products/management/commands/__pycache__
