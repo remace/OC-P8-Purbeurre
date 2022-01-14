@@ -42,7 +42,13 @@ $> ./manage.py migrate
 ### unit tests
 at the root of the project, virtual environment activated:
 ```
-./manage.py test
+./manage.py test accounts products
+```
+### functionnal tests:
+download geckodriver (firefox driver for selenium) and add his path to PATH. if your OS is linux-based, add a symlink to it in /usr/bin/geckodriver.
+then run the functionnal test from the root of the project, virtual environment activated:
+```
+./manage.py test functionnal_tests/
 ```
 ### play with the application in localhost
 at the root of the project, virtual environment activated:
