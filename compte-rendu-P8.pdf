@@ -1,0 +1,70 @@
+# Compte-rendu du projet 8 - Pur Beurre
+
+## liens utiles:
+
+[site hébergé sur heroku](http://remace-purbeurre.herokuapp.com)
+
+[github](https://github.com/remace/OC-P8-Purbeurre)
+
+[trello](https://trello.com/b/MMPgH3xg/p8-openfoodfacts)
+
+[copie du Trello sur github](https://github.com/remace/OC-P8-Purbeurre/projects/1)
+
+## Démarche de conception
+
+j'ai commencé par installer django, puis créer la page d'accueil du site. ensuite je me suis attelé à la conception de tout ce qui est utile à l'authentification de l'utilisateur, et enfin j'ai commencé à travailler sur les produits.
+
+pour ces 2 dernières étapes, j'ai procédé de la manière suivante: un objet simple dans le modèle, puis une vue pour chaque fonctionnalité liée à ce modèle, et un template. une fois tout ceci fonctionnel, j'ai étoffé petit à petit le modèle pour couvrir les besoins des vues et des templates. par exemple, pour les produits:
+
+* j'ai commencé par créer un modèle de produit avec seulement un nom, une catégorie, et un nutriscore (suffisant pour la plupart des fonctionnalités du site)
+
+* j'ai créé un script minimal pour importer quelques produits de quelques catégories 
+
+* j'ai ensuite créé toutes les vues et templates liés à ce modèle (vues de produit et de recherche - qui est réutilisée dans plusieurs contextes)
+
+* ensuite, j'ai rajouté des données nutritionnelles
+
+* données nutritionnelles que j'ai intégrées dans les vues (et les templates)
+
+* pareil pour les liens vers les photos d'OpenFoodFacts
+
+
+
+
+<div style="page-break-after: always;"></div>
+
+## Test Driven Development
+
+j'ai utilisé une politique de développement par les tests, mais j'ai fait plusieurs essais:
+
+j'ai d'abord considéré coder un seul test de totue la feature, puis apporter le changement voulu pour qu'il soit validé, avec les effets suivants:
+
+* plus facile et plus rapide de créer le test puis le valider
+
+* par contre, j'ai manqué de visibilité sur la feature globale, ce qui m'a amené à faire de gros changements pour adapter le code aux derniers tests 
+
+j'ai ensuite essayé le contraire: écrire tous les tests d'une fonctionnalité (une vue, très souvent), puis essayer de les valider petit à petit avec les effet suivants:
+
+* une meilleure vue d'ensemble sur les besoins de la fonctionnalité avant de commencer à la coder
+
+
+
+## Difficultés rencontrées
+
+j'ai eu des difficultés à adapter le thème fourni à ce qui est demandé pour coller suffisamment au cahier des charges, surtout à propos de l'alignement des balises entre elles.
+
+j'ai aussi eu des difficultés à parcourir la base de données d'Open Food Facts, dans laquelle les données sont peu normalisées: il manque certaines données, d'autres sont inscrites à plusieurs endroits, mais pas pour tous les produits... j'ai fini par donner une valeur négative par défaut, et ajouter un rendu conditionnel pour la valeur dans le template.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
