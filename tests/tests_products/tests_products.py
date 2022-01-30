@@ -3,7 +3,7 @@ from django.test import TestCase, Client
 
 from django.urls import reverse
 from accounts.models import User
-from .models import Category, Product
+from products.models import Category, Product
 # Create your tests here.
 
 class IndexPageTestCase(TestCase):

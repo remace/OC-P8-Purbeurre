@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from accounts.models import User
-# Create your tests here.
+
 
 class RegisterPageTestCase(TestCase):
     """ test on register page """
