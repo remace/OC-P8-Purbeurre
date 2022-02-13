@@ -4,7 +4,13 @@
 {% block content %}
 
     {% include 'products/nav.html'%}    
-
+    {% if messages%}
+        {% for message in messages%}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif%}
     <header class="masthead">
         <div class="container px-4 px-lg-5 h-100">
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
