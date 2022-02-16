@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  DJANGO_SETTINGS_MODULE:'purbeurre.settings.ci'
+  DJANGO_SETTINGS_MODULE:purbeurre.settings.ci
 
 jobs:
   tests:
