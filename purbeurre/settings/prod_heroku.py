@@ -24,8 +24,8 @@ if os.environ.get('ENV') == 'PRODUCTION':
     DATABASES['default'].update(db_from_env)
     MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
 
-    PROJECT_ROOT = os.path.join(BASE_DIR,'purbeurre')
-    STATIC_ROOT = os.path.join(PROJECT_ROOT,'staticfiles')
+    PROJECT_ROOT = BASE_DIR
+    STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
     STATICFILES_DIRS = [
         os.path.join(PROJECT_ROOT, 'static')
     ]
