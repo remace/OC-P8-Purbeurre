@@ -5,3 +5,5 @@ env
 __pycache__/
 products/migrations/
 products/management/commands/__pycache__
+
+CITestDatabase

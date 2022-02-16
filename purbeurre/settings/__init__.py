@@ -69,42 +69,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'purbeurre.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Nutella_db',
-        'USER': 'Nutella_user',
-        'PASSWORD': 'Nutella_pwd',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'TEST': {
-            'NAME': 'test_database',
-        }
-    }
-}
-
-if os.environ.get('ENV') == 'PRODUCTION':
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    DEBUG = False
-
-    ALLOWED_HOSTS = ['remace-purbeurre.herokuapp.com']
-
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
-    MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
-
-else:
-    # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = "secret_not_secure_cause_too easy to control"
-
-    # SECURITY WARNING: don't run with debug turned on in production!
-    DEBUG = True
-    ALLOWED_HOSTS = []
-    
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -154,12 +118,3 @@ AUTH_USER_MODEL = 'accounts.User'
 
 #pour @login_required
 LOGIN_URL = '/user/login'
-
-
-if os.environ.get('ENV') == 'PRODUCTION':
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-    STATIC_ROOT = os.path.join(PROJECT_ROOT,'staticfiles')
-    STATICFILES_DIRS = [
-        os.path.join(PROJECT_ROOT, 'static')
-    ]
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
