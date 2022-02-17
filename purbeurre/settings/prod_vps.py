@@ -25,7 +25,7 @@ ALLOWED_HOSTS = ['127.0.0.1'] # à modifier une fois sur le serveur
 PROJECT_ROOT = BASE_DIR
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATICFILES_DIRS = [
-        os.path.join(PROJECT_ROOT, 'purbeurre/static')
+        os.path.join(PROJECT_ROOT, 'static')
     ]
 
 # sentry sdk
