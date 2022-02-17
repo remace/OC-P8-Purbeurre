@@ -30,7 +30,7 @@ STATICFILES_DIRS = [
 
 # sentry sdk
 sentry_sdk.init(
-    dsn="https://fe7c562ac6d5471bb4939189a4a638d6@o1137137.ingest.sentry.io/6214265",
+    dsn="", # à modifier selon le serveur
     integrations=[DjangoIntegration()],
     traces_sample_rate=1.0,
     send_default_pii=True
