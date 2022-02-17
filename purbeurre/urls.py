@@ -18,9 +18,13 @@ import os
 from django.contrib import admin
 from django.urls import path, include
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('products.urls')),
+    path('trigger-error/', trigger_error),
     path('user/', include('accounts.urls')),
 ]
     
