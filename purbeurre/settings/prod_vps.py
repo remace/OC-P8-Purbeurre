@@ -20,12 +20,15 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1'] # à modifier une fois sur le serveur
 
+
+# static files
 PROJECT_ROOT = BASE_DIR
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATICFILES_DIRS = [
-        os.path.join(PROJECT_ROOT, 'static')
+        os.path.join(PROJECT_ROOT, 'purbeurre/static')
     ]
 
+# sentry sdk
 sentry_sdk.init(
     dsn="https://fe7c562ac6d5471bb4939189a4a638d6@o1137137.ingest.sentry.io/6214265",
     integrations=[DjangoIntegration()],
