@@ -25,9 +25,9 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     nutriscore = models.CharField(max_length=1, choices=NUTRISCORE_CHOICES, default='F')
 
-    # with unix timestamps
+    # with django datetimes
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
-    updated_at = models.DateTimeField(blank=True)
+    updated_at = models.DateTimeField(auto_now_add=True, blank=True)
 
     # nutritionnal values per 100g
     energy_unit = models.CharField(max_length=6, choices=ENERGY_UNITS, default = 'kcal')
