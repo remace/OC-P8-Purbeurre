@@ -26,7 +26,7 @@ class Product(models.Model):
     nutriscore = models.CharField(max_length=1, choices=NUTRISCORE_CHOICES, default='F')
 
     # with unix timestamps
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, default = datetime.now())
     updated_at = models.DateTimeField()
 
     # nutritionnal values per 100g
