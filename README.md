@@ -54,4 +54,4 @@ then go to 127.0.0.1:8000 in your web browser
 
 ## useful links
 
-* live website -> [https://remace-purbeurre.herokuapp.com](https://remace-purbeurre.herokuapp.com)
+* live website -> [http://remace-purbeurre.tech](http://remace-purbeurre.tech)
